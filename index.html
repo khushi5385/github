@@ -3,159 +3,1042 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> Apex papers</title>
-   <style>
-
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f4f4f4;
-}
-
-header {
-    background: #333;
-    color: #fff;
-    padding: 15px 20px;
-    text-align: center;
-}
-
-nav ul {
-    list-style: none;
-    padding: 0;
-}
-
-nav ul li {
-    display: inline;
-    margin: 0 15px;
-}
-
-nav ul li a {
-    color: #fff;
-    text-decoration: none;
-}
-
-.search {
-    text-align: center;
-    margin: 20px;
-}
-
-.search input {
-    padding: 10px;
-    width: 60%;
-    max-width: 400px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
-
-.search button {
-    padding: 10px 15px;
-    background: #2c2d2f;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-.search button:hover {
-    background: #0056b3;
-}
-
-.papers {
-    width: 80%;
-    margin: 20px auto;
-    background: white;
-    padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-.papers h2 {
-    text-align: center;
-}
-
-.papers ul {
-    list-style: none;
-    padding: 0;
-}
-
-.papers ul li {
-    padding: 10px;
-    border-bottom: 1px solid #ccc;
-}
-
-.papers ul li a {
-    color: #007BFF;
-    text-decoration: none;
-}
-
-.papers ul li a:hover {
-    text-decoration: underline;
-}
-
-footer {
-    text-align: center;
-    padding: 15px;
-    background: #333;
-    color: white;
-    margin-top: 20px;
-}
-
-
-
-
-   </style>
+    <title>Student Exam System</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+        }
+        .container {
+            display: none;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .login-container {
+            max-width: 400px;
+            margin: 100px auto;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1, h2 {
+            color: #333333;
+            text-align: center;
+        }
+        input, select, button {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .tab {
+            overflow: hidden;
+            border: 1px solid #ccc;
+            background-color: #507e7a;
+        }
+        .tab button {
+            background-color: inherit;
+            float: left;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            padding: 14px 16px;
+            transition: 0.3s;
+        }
+        .tab button:hover {
+            background-color: #0fccd3;
+        }
+        .tab button.active {
+            background-color: #18d5e2ce;
+        }
+        .tabcontent {
+            display: none;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-top: none;
+            background: rgb(255, 255, 255);
+        }
+        .question {
+            margin-bottom: 20px;
+            padding: 15px;
+            background: #f9f9f9;
+            border-left: 4px solid #4CAF50;
+        }
+        .warning {
+            color: red;
+            font-weight: bold;
+        }
+        #examContainer {
+            position: relative;
+        }
+        #fullscreenWarning {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: red;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            z-index: 1000;
+        }
+        .correct-answer {
+            background-color: #e6ffe6;
+        }
+        .wrong-answer {
+            background-color: #ffe6e6;
+        }
+        .grading-options {
+            margin-top: 10px;
+        }
+        .result-summary {
+            margin: 20px 0;
+            padding: 15px;
+            background: #f0f8ff;
+            border-radius: 5px;
+        }
+    </style>
 </head>
 <body>
-    <header>
-        <h1>APEX Paper </h1>
-        <nav>
-            <ul>
-                <li><a href="#">Home</a></li>
-                <li><a href="#">Past Papers</a></li>
-                <li><a href="#">Subjects</a></li>
-                <li><a href="#">Contact</a></li>
-                <li><a href="file:///C:/Users/pc/OneDrive/Desktop/khushi.html/KHUSHI1.HTML/KHUSHI1.html">Login</a></li>
-            </ul>
-        </nav>
-    </header>
-    
-    <main>
-        <section class="search">
-            <input type="text" id="searchBar" placeholder="Search for past papers...">
-            <button onclick="searchPapers()">Search</button>
-        </section>
-        <section class="papers">
-            <h2>Recent Past Papers</h2>
-            <ul id="paperList">
-                <li>Mathematics 2024 - <a href="#">Download</a></li>
-                <li>Physics 2024 - <a href="#">Download</a></li>
-                <li>Chemistry 2024 - <a href="#">Download</a></li>
-            </ul>
-        </section>
-      
-    </main>
-    
-    <footer>
-        <p>&copy; 2025 APEX Papers.in. All rights reserved.</p>
-    </footer>
-    
-    <script src="script.js"> document.addEventListener("DOMContentLoaded", function () {
-        const elements = document.querySelectorAll(".fade-in");
-        
-        const observer = new IntersectionObserver((entries, observer) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add("visible");
-                    observer.unobserve(entry.target);
+    <!-- Login Page -->
+    <div id="loginPage" class="login-container">
+        <h1>Exam System Login</h1>
+        <select id="userType">
+            <option value="student">Student</option>
+            <option value="teacher">Teacher</option>
+        </select>
+        <input type="text" id="username" placeholder="Username" required>
+        <input type="password" id="password" placeholder="Password" required>
+        <button onclick="login()">Login</button>
+        <p id="loginError" style="color:red;"></p>
+    </div>
+
+    <!-- Student Dashboard -->
+    <div id="studentDashboard" class="container">
+        <div class="tab">
+            <button class="tablinks active" onclick="openTab(event, 'markAttendance')">Mark Attendance</button>
+            <button class="tablinks" onclick="openTab(event, 'takeExam')">Take Exam</button>
+            <button class="tablinks" onclick="openTab(event, 'viewResults')">View Results</button>
+        </div>
+
+        <div id="markAttendance" class="tabcontent" style="display:block;">
+            <h2>Mark Your Attendance</h2>
+            <select id="attendanceStatus">
+                <option value="present">Present</option>
+                <option value="absent">Absent</option>
+            </select>
+            <button onclick="submitAttendance()">Submit Attendance</button>
+            <p id="attendanceMessage"></p>
+        </div>
+
+        <div id="takeExam" class="tabcontent">
+            <h2>Available Exams</h2>
+            <div id="examList"></div>
+        </div>
+
+        <div id="viewResults" class="tabcontent">
+            <h2>Your Exam Results</h2>
+            <div id="studentResults"></div>
+        </div>
+    </div>
+
+    <!-- Exam Interface -->
+    <div id="examContainer" class="container">
+        <h2 id="examTitle"></h2>
+        <div id="fullscreenWarning">WARNING: You left fullscreen mode or switched tabs! This will be reported as cheating.</div>
+        <div id="examQuestions"></div>
+        <button onclick="submitExam()">Submit Exam</button>
+        <p id="examTimer"></p>
+        <p id="cheatingWarning" class="warning"></p>
+    </div>
+
+    <!-- Teacher Dashboard -->
+    <div id="teacherDashboard" class="container">
+        <div class="tab">
+            <button class="tablinks active" onclick="openTab(event, 'viewAttendance')">View Attendance</button>
+            <button class="tablinks" onclick="openTab(event, 'viewExams')">View Exams</button>
+            <button class="tablinks" onclick="openTab(event, 'createExam')">Create Exam</button>
+            <button class="tablinks" onclick="openTab(event, 'gradeExams')">Grade Exams</button>
+            <button class="tablinks" onclick="openTab(event, 'cheatingReports')">Cheating Reports</button>
+            <button class="tablinks" onclick="openTab(event, 'publishResults')">Publish Results</button>
+        </div>
+
+        <div id="viewAttendance" class="tabcontent" style="display:block;">
+            <h2>Student Attendance</h2>
+            <div id="attendanceRecords"></div>
+        </div>
+
+        <div id="viewExams" class="tabcontent">
+            <h2>Exam Submissions</h2>
+            <div id="examSubmissions"></div>
+        </div>
+
+        <div id="createExam" class="tabcontent">
+            <h2>Create New Exam</h2>
+            <input type="text" id="examName" placeholder="Exam Name">
+            <input type="number" id="examDuration" placeholder="Duration (minutes)">
+            <div id="questionsContainer">
+                <div class="question">
+                    <input type="text" placeholder="Question 1" class="questionText">
+                    <input type="text" placeholder="Correct Answer" class="correctAnswer">
+                </div>
+            </div>
+            <button onclick="addQuestion()">Add Question</button>
+            <button onclick="saveExam()">Save Exam</button>
+        </div>
+
+        <div id="gradeExams" class="tabcontent">
+            <h2>Grade Student Exams</h2>
+            <div id="gradingContainer"></div>
+        </div>
+
+        <div id="cheatingReports" class="tabcontent">
+            <h2>Cheating Reports</h2>
+            <div id="cheatingRecords"></div>
+        </div>
+
+        <div id="publishResults" class="tabcontent">
+            <h2>Publish Exam Results</h2>
+            <select id="examToPublish">
+                <!-- Will be populated with exams -->
+            </select>
+            <button onclick="publishResults()">Publish Results</button>
+            <div id="publishedResultsList"></div>
+        </div>
+    </div>
+
+    <script>
+        // Initialize data in localStorage if not exists
+        if (!localStorage.getItem('users')) {
+            const users = {
+                students: [
+                    { id: 's001', name: 'John Doe', password: 'student123' },
+                    { id: 's002', name: 'Jane Smith', password: 'student123' }
+                ],
+                teachers: [
+                    { id: 't001', name: 'Professor Johnson', password: 'teacher123' }
+                ]
+            };
+            localStorage.setItem('users', JSON.stringify(users));
+        }
+
+        if (!localStorage.getItem('attendance')) {
+            localStorage.setItem('attendance', JSON.stringify([]));
+        }
+
+        if (!localStorage.getItem('exams')) {
+            const sampleExam = {
+                id: 'exam1',
+                name: 'Sample Exam',
+                duration: 30,
+                questions: [
+                    { question: 'What is 2+2?', answer: '4' },
+                    { question: 'What is the capital of France?', answer: 'Paris' }
+                ],
+                published: false
+            };
+            localStorage.setItem('exams', JSON.stringify([sampleExam]));
+        }
+
+        if (!localStorage.getItem('examSubmissions')) {
+            localStorage.setItem('examSubmissions', JSON.stringify([]));
+        }
+
+        if (!localStorage.getItem('cheatingReports')) {
+            localStorage.setItem('cheatingReports', JSON.stringify([]));
+        }
+
+        if (!localStorage.getItem('publishedResults')) {
+            localStorage.setItem('publishedResults', JSON.stringify([]));
+        }
+
+        // Global variables
+        let currentUser = null;
+        let currentExam = null;
+        let examTimer = null;
+        let timeLeft = 0;
+        let cheatingDetected = false;
+        let blurCount = 0;
+
+        // Login function
+        function login() {
+            const userType = document.getElementById('userType').value;
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            
+            const users = JSON.parse(localStorage.getItem('users'));
+            let user = null;
+            
+            if (userType === 'student') {
+                user = users.students.find(s => s.id === username && s.password === password);
+            } else {
+                user = users.teachers.find(t => t.id === username && t.password === password);
+            }
+            
+            if (user) {
+                currentUser = { ...user, type: userType };
+                document.getElementById('loginPage').style.display = 'none';
+                
+                if (userType === 'student') {
+                    document.getElementById('studentDashboard').style.display = 'block';
+                    loadStudentExams();
+                    loadStudentResults();
+                } else {
+                    document.getElementById('teacherDashboard').style.display = 'block';
+                    loadAttendanceRecords();
+                    loadExamSubmissions();
+                    loadCheatingReports();
+                    loadGradingExams();
+                    loadPublishResults();
+                }
+            } else {
+                document.getElementById('loginError').textContent = 'Invalid username or password';
+            }
+        }
+
+        // Student functions
+        function submitAttendance() {
+            const status = document.getElementById('attendanceStatus').value;
+            const attendanceRecords = JSON.parse(localStorage.getItem('attendance'));
+            
+            const today = new Date().toISOString().split('T')[0];
+            const existingRecordIndex = attendanceRecords.findIndex(record => 
+                record.studentId === currentUser.id && record.date === today
+            );
+            
+            if (existingRecordIndex !== -1) {
+                attendanceRecords[existingRecordIndex].status = status;
+            } else {
+                attendanceRecords.push({
+                    studentId: currentUser.id,
+                    studentName: currentUser.name,
+                    date: today,
+                    status: status
+                });
+            }
+            
+            localStorage.setItem('attendance', JSON.stringify(attendanceRecords));
+            document.getElementById('attendanceMessage').textContent = `Attendance marked as ${status} for today.`;
+        }
+
+        function loadStudentExams() {
+            const exams = JSON.parse(localStorage.getItem('exams'));
+            const publishedResults = JSON.parse(localStorage.getItem('publishedResults'));
+            const examList = document.getElementById('examList');
+            examList.innerHTML = '';
+            
+            exams.forEach(exam => {
+                // Check if student has already taken this exam
+                const submissions = JSON.parse(localStorage.getItem('examSubmissions'));
+                const alreadyTaken = submissions.some(sub => 
+                    sub.examId === exam.id && sub.studentId === currentUser.id
+                );
+                
+                // Check if results are published
+                const resultsPublished = publishedResults.some(res => 
+                    res.examId === exam.id && res.published
+                );
+                
+                if (!alreadyTaken) {
+                    const examDiv = document.createElement('div');
+                    examDiv.className = 'question';
+                    examDiv.innerHTML = `
+                        <h3>${exam.name}</h3>
+                        <p>Duration: ${exam.duration} minutes</p>
+                        <button onclick="startExam('${exam.id}')">Start Exam</button>
+                    `;
+                    examList.appendChild(examDiv);
+                } else if (resultsPublished) {
+                    const examDiv = document.createElement('div');
+                    examDiv.className = 'question';
+                    examDiv.innerHTML = `
+                        <h3>${exam.name}</h3>
+                        <p>Exam completed. Results available in View Results tab.</p>
+                    `;
+                    examList.appendChild(examDiv);
+                } else {
+                    const examDiv = document.createElement('div');
+                    examDiv.className = 'question';
+                    examDiv.innerHTML = `
+                        <h3>${exam.name}</h3>
+                        <p>Exam completed. Waiting for results to be published.</p>
+                    `;
+                    examList.appendChild(examDiv);
                 }
             });
-        }, { threshold: 0.5 });
-        
-        elements.forEach(element => {
-            observer.observe(element);
-        });
-    });</script>
-</body>
+        }
 
+        function loadStudentResults() {
+            const publishedResults = JSON.parse(localStorage.getItem('publishedResults'));
+            const submissions = JSON.parse(localStorage.getItem('examSubmissions'));
+            const studentResultsDiv = document.getElementById('studentResults');
+            studentResultsDiv.innerHTML = '';
+            
+            if (publishedResults.length === 0) {
+                studentResultsDiv.innerHTML = '<p>No results available yet.</p>';
+                return;
+            }
+            
+            let hasResults = false;
+            
+            publishedResults.forEach(published => {
+                if (published.published) {
+                    const submission = submissions.find(sub => 
+                        sub.examId === published.examId && sub.studentId === currentUser.id
+                    );
+                    
+                    if (submission) {
+                        hasResults = true;
+                        const exam = JSON.parse(localStorage.getItem('exams')).find(ex => ex.id === published.examId);
+                        
+                        const resultDiv = document.createElement('div');
+                        resultDiv.className = 'result-summary';
+                        resultDiv.innerHTML = `
+                            <h3>${exam.name}</h3>
+                            <p>Score: ${submission.score}/${exam.questions.length}</p>
+                            <p>Percentage: ${Math.round((submission.score / exam.questions.length) * 100)}%</p>
+                            <button onclick="viewDetailedResult('${exam.id}')">View Details</button>
+                        `;
+                        studentResultsDiv.appendChild(resultDiv);
+                    }
+                }
+            });
+            
+            if (!hasResults) {
+                studentResultsDiv.innerHTML = '<p>No results available yet.</p>';
+            }
+        }
+
+        function viewDetailedResult(examId) {
+            const submission = JSON.parse(localStorage.getItem('examSubmissions')).find(sub => 
+                sub.examId === examId && sub.studentId === currentUser.id
+            );
+            
+            const exam = JSON.parse(localStorage.getItem('exams')).find(ex => ex.id === examId);
+            
+            let details = `<h3>${exam.name} - Detailed Results</h3>`;
+            details += `<p>Overall Score: ${submission.score}/${exam.questions.length}</p>`;
+            details += '<h4>Question-wise Results:</h4>';
+            
+            exam.questions.forEach((q, index) => {
+                const studentAnswer = submission.answers[index];
+                const isCorrect = studentAnswer === q.answer;
+                
+                details += `<div class="question ${isCorrect ? 'correct-answer' : 'wrong-answer'}">`;
+                details += `<p><strong>Question ${index + 1}:</strong> ${q.question}</p>`;
+                details += `<p>Your answer: ${studentAnswer || 'Not answered'}</p>`;
+                details += `<p>Correct answer: ${q.answer}</p>`;
+                details += `<p>${isCorrect ? 'Correct' : 'Incorrect'}</p>`;
+                details += '</div>';
+            });
+            
+            alert(details); // In a real app, you'd show this in a modal
+        }
+
+        function startExam(examId) {
+            const exams = JSON.parse(localStorage.getItem('exams'));
+            currentExam = exams.find(exam => exam.id === examId);
+            
+            document.getElementById('studentDashboard').style.display = 'none';
+            document.getElementById('examContainer').style.display = 'block';
+            document.getElementById('examTitle').textContent = currentExam.name;
+            
+            // Set up exam questions
+            const examQuestions = document.getElementById('examQuestions');
+            examQuestions.innerHTML = '';
+            
+            currentExam.questions.forEach((q, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'question';
+                questionDiv.innerHTML = `
+                    <p><strong>Question ${index + 1}:</strong> ${q.question}</p>
+                    <input type="text" id="q${index}" placeholder="Your answer">
+                `;
+                examQuestions.appendChild(questionDiv);
+            });
+            
+            // Set up timer
+            timeLeft = currentExam.duration * 60;
+            updateTimerDisplay();
+            examTimer = setInterval(() => {
+                timeLeft--;
+                updateTimerDisplay();
+                if (timeLeft <= 0) {
+                    clearInterval(examTimer);
+                    submitExam();
+                }
+            }, 1000);
+            
+            // Set up cheating detection
+            cheatingDetected = false;
+            blurCount = 0;
+            document.addEventListener('visibilitychange', handleVisibilityChange);
+            window.addEventListener('blur', handleWindowBlur);
+            document.addEventListener('fullscreenchange', checkFullscreen);
+            document.addEventListener('webkitfullscreenchange', checkFullscreen);
+            document.addEventListener('mozfullscreenchange', checkFullscreen);
+            document.addEventListener('MSFullscreenChange', checkFullscreen);
+            
+            // Request fullscreen
+            if (document.documentElement.requestFullscreen) {
+                document.documentElement.requestFullscreen();
+            } else if (document.documentElement.webkitRequestFullscreen) {
+                document.documentElement.webkitRequestFullscreen();
+            } else if (document.documentElement.msRequestFullscreen) {
+                document.documentElement.msRequestFullscreen();
+            }
+        }
+
+        function updateTimerDisplay() {
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            document.getElementById('examTimer').textContent = `Time remaining: ${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+        }
+
+        function handleVisibilityChange() {
+            if (document.hidden) {
+                blurCount++;
+                if (blurCount >= 3) {
+                    cheatingDetected = true;
+                    document.getElementById('cheatingWarning').textContent = 'CHEATING DETECTED: Multiple tab switches detected!';
+                } else {
+                    document.getElementById('cheatingWarning').textContent = 'Warning: Please stay on this tab!';
+                }
+            }
+        }
+
+        function handleWindowBlur() {
+            blurCount++;
+            if (blurCount >= 3) {
+                cheatingDetected = true;
+                document.getElementById('cheatingWarning').textContent = 'CHEATING DETECTED: Multiple window switches detected!';
+            } else {
+                document.getElementById('cheatingWarning').textContent = 'Warning: Please stay on this window!';
+            }
+        }
+
+        function checkFullscreen() {
+            if (!document.fullscreenElement && !document.webkitFullscreenElement && 
+                !document.mozFullScreenElement && !document.msFullscreenElement) {
+                document.getElementById('fullscreenWarning').style.display = 'block';
+                cheatingDetected = true;
+            } else {
+                document.getElementById('fullscreenWarning').style.display = 'none';
+            }
+        }
+
+        function submitExam() {
+            clearInterval(examTimer);
+            
+            // Remove event listeners
+            document.removeEventListener('visibilitychange', handleVisibilityChange);
+            window.removeEventListener('blur', handleWindowBlur);
+            document.removeEventListener('fullscreenchange', checkFullscreen);
+            document.removeEventListener('webkitfullscreenchange', checkFullscreen);
+            document.removeEventListener('mozfullscreenchange', checkFullscreen);
+            document.removeEventListener('MSFullscreenChange', checkFullscreen);
+            
+            // Exit fullscreen
+            if (document.exitFullscreen) {
+                document.exitFullscreen();
+            } else if (document.webkitExitFullscreen) {
+                document.webkitExitFullscreen();
+            } else if (document.msExitFullscreen) {
+                document.msExitFullscreen();
+            }
+            
+            // Collect answers
+            const answers = [];
+            currentExam.questions.forEach((_, index) => {
+                const answer = document.getElementById(`q${index}`).value;
+                answers.push(answer || '');
+            });
+            
+            // Save submission (initially ungraded)
+            const submissions = JSON.parse(localStorage.getItem('examSubmissions'));
+            submissions.push({
+                examId: currentExam.id,
+                examName: currentExam.name,
+                studentId: currentUser.id,
+                studentName: currentUser.name,
+                answers: answers,
+                score: 0, // Will be calculated by teacher
+                totalQuestions: currentExam.questions.length,
+                graded: false,
+                cheatingDetected: cheatingDetected,
+                timestamp: new Date().toISOString()
+            });
+            localStorage.setItem('examSubmissions', JSON.stringify(submissions));
+            
+            // Save cheating report if detected
+            if (cheatingDetected) {
+                const cheatingReports = JSON.parse(localStorage.getItem('cheatingReports'));
+                cheatingReports.push({
+                    examId: currentExam.id,
+                    examName: currentExam.name,
+                    studentId: currentUser.id,
+                    studentName: currentUser.name,
+                    timestamp: new Date().toISOString(),
+                    reason: 'Multiple tab/window switches or left fullscreen mode'
+                });
+                localStorage.setItem('cheatingReports', JSON.stringify(cheatingReports));
+            }
+            
+            // Return to student dashboard
+            document.getElementById('examContainer').style.display = 'none';
+            document.getElementById('studentDashboard').style.display = 'block';
+            
+            alert(`Exam submitted successfully!` + 
+                  (cheatingDetected ? '\nNote: Cheating was detected during this exam.' : ''));
+            
+            // Reload exams list
+            loadStudentExams();
+        }
+
+        // Teacher functions
+        function loadAttendanceRecords() {
+            const attendanceRecords = JSON.parse(localStorage.getItem('attendance'));
+            const attendanceTable = document.createElement('table');
+            
+            // Create header
+            const header = attendanceTable.createTHead();
+            const headerRow = header.insertRow();
+            headerRow.innerHTML = '<th>Date</th><th>Student ID</th><th>Student Name</th><th>Status</th>';
+            
+            // Create body
+            const body = attendanceTable.createTBody();
+            attendanceRecords.forEach(record => {
+                const row = body.insertRow();
+                row.innerHTML = `
+                    <td>${record.date}</td>
+                    <td>${record.studentId}</td>
+                    <td>${record.studentName}</td>
+                    <td>${record.status}</td>
+                `;
+            });
+            
+            document.getElementById('attendanceRecords').innerHTML = '';
+            document.getElementById('attendanceRecords').appendChild(attendanceTable);
+        }
+
+        function loadExamSubmissions() {
+            const submissions = JSON.parse(localStorage.getItem('examSubmissions'));
+            const submissionsDiv = document.getElementById('examSubmissions');
+            submissionsDiv.innerHTML = '';
+            
+            const groupedByExam = {};
+            submissions.forEach(sub => {
+                if (!groupedByExam[sub.examId]) {
+                    groupedByExam[sub.examId] = {
+                        name: sub.examName,
+                        submissions: []
+                    };
+                }
+                groupedByExam[sub.examId].submissions.push(sub);
+            });
+            
+            for (const examId in groupedByExam) {
+                const examDiv = document.createElement('div');
+                examDiv.className = 'question';
+                examDiv.innerHTML = `<h3>${groupedByExam[examId].name}</h3>`;
+                
+                const table = document.createElement('table');
+                const header = table.createTHead();
+                const headerRow = header.insertRow();
+                headerRow.innerHTML = '<th>Student</th><th>Score</th><th>Graded</th><th>Cheating Detected</th><th>Date</th><th>Details</th>';
+                
+                const body = table.createTBody();
+                groupedByExam[examId].submissions.forEach(sub => {
+                    const row = body.insertRow();
+                    row.innerHTML = `
+                        <td>${sub.studentName}</td>
+                        <td>${sub.graded ? sub.score : 'Not graded'}</td>
+                        <td>${sub.graded ? 'Yes' : 'No'}</td>
+                        <td>${sub.cheatingDetected ? 'Yes' : 'No'}</td>
+                        <td>${new Date(sub.timestamp).toLocaleString()}</td>
+                        <td><button onclick="viewExamDetails('${examId}', '${sub.studentId}')">View</button></td>
+                    `;
+                });
+                
+                examDiv.appendChild(table);
+                submissionsDiv.appendChild(examDiv);
+            }
+        }
+
+        function loadGradingExams() {
+            const gradingContainer = document.getElementById('gradingContainer');
+            gradingContainer.innerHTML = '';
+            
+            const exams = JSON.parse(localStorage.getItem('exams'));
+            const submissions = JSON.parse(localStorage.getItem('examSubmissions'));
+            
+            exams.forEach(exam => {
+                const examSubmissions = submissions.filter(sub => sub.examId === exam.id && !sub.graded);
+                
+                if (examSubmissions.length > 0) {
+                    const examDiv = document.createElement('div');
+                    examDiv.className = 'question';
+                    examDiv.innerHTML = `<h3>${exam.name} - Ungraded Submissions</h3>`;
+                    
+                    const table = document.createElement('table');
+                    const header = table.createTHead();
+                    const headerRow = header.insertRow();
+                    headerRow.innerHTML = '<th>Student</th><th>Date</th><th>Action</th>';
+                    
+                    const body = table.createTBody();
+                    examSubmissions.forEach(sub => {
+                        const row = body.insertRow();
+                        row.innerHTML = `
+                            <td>${sub.studentName}</td>
+                            <td>${new Date(sub.timestamp).toLocaleString()}</td>
+                            <td><button onclick="gradeStudentExam('${exam.id}', '${sub.studentId}')">Grade</button></td>
+                        `;
+                    });
+                    
+                    examDiv.appendChild(table);
+                    gradingContainer.appendChild(examDiv);
+                }
+            });
+            
+            if (gradingContainer.innerHTML === '') {
+                gradingContainer.innerHTML = '<p>No exams to grade at this time.</p>';
+            }
+        }
+
+        function gradeStudentExam(examId, studentId) {
+            const submissions = JSON.parse(localStorage.getItem('examSubmissions'));
+            const exam = JSON.parse(localStorage.getItem('exams')).find(ex => ex.id === examId);
+            const submission = submissions.find(sub => sub.examId === examId && sub.studentId === studentId);
+            
+            let gradingForm = `<h3>Grading ${submission.studentName}'s ${exam.name}</h3>`;
+            
+            exam.questions.forEach((q, index) => {
+                const studentAnswer = submission.answers[index];
+                const isCorrect = studentAnswer.toLowerCase() === q.answer.toLowerCase();
+                
+                gradingForm += `<div class="question ${isCorrect ? 'correct-answer' : 'wrong-answer'}">`;
+                gradingForm += `<p><strong>Question ${index + 1}:</strong> ${q.question}</p>`;
+                gradingForm += `<p>Student answer: ${studentAnswer || 'Not answered'}</p>`;
+                gradingForm += `<p>Correct answer: ${q.answer}</p>`;
+                
+                if (!isCorrect) {
+                    gradingForm += `
+                        <div class="grading-options">
+                            <label>
+                                <input type="radio" name="grade_q${index}" value="correct" onclick="updateGrade('${examId}', '${studentId}', ${index}, true)">
+                                Mark as Correct
+                            </label>
+                            <label>
+                                <input type="radio" name="grade_q${index}" value="incorrect" checked onclick="updateGrade('${examId}', '${studentId}', ${index}, false)">
+                                Mark as Incorrect
+                            </label>
+                        </div>
+                    `;
+                } else {
+                    gradingForm += `<p>Automatically marked as correct</p>`;
+                }
+                
+                gradingForm += '</div>';
+            });
+            
+            gradingForm += `
+                <div class="result-summary">
+                    <p>Current Score: ${submission.score}/${exam.questions.length}</p>
+                    <button onclick="finalizeGrade('${examId}', '${studentId}')">Finalize Grade</button>
+                </div>
+            `;
+            
+            document.getElementById('gradingContainer').innerHTML = gradingForm;
+        }
+
+        function updateGrade(examId, studentId, questionIndex, isCorrect) {
+            const submissions = JSON.parse(localStorage.getItem('examSubmissions'));
+            const submission = submissions.find(sub => sub.examId === examId && sub.studentId === studentId);
+            const exam = JSON.parse(localStorage.getItem('exams')).find(ex => ex.id === examId);
+            
+            // Update the answer in the submission to match the correct answer if marked as correct
+            if (isCorrect) {
+                submission.answers[questionIndex] = exam.questions[questionIndex].answer;
+            }
+            
+            // Recalculate score
+            let score = 0;
+            exam.questions.forEach((q, index) => {
+                if (submission.answers[index].toLowerCase() === q.answer.toLowerCase()) {
+                    score++;
+                }
+            });
+            
+            submission.score = score;
+            localStorage.setItem('examSubmissions', JSON.stringify(submissions));
+            
+            // Refresh the display
+            document.querySelector('.result-summary p').textContent = `Current Score: ${score}/${exam.questions.length}`;
+        }
+
+        function finalizeGrade(examId, studentId) {
+            const submissions = JSON.parse(localStorage.getItem('examSubmissions'));
+            const submission = submissions.find(sub => sub.examId === examId && sub.studentId === studentId);
+            
+            submission.graded = true;
+            localStorage.setItem('examSubmissions', JSON.stringify(submissions));
+            
+            alert(`Grade finalized for ${submission.studentName}. Score: ${submission.score}/${submission.totalQuestions}`);
+            loadGradingExams();
+        }
+
+        function loadPublishResults() {
+            const exams = JSON.parse(localStorage.getItem('exams'));
+            const examSelect = document.getElementById('examToPublish');
+            examSelect.innerHTML = '';
+            
+            exams.forEach(exam => {
+                const option = document.createElement('option');
+                option.value = exam.id;
+                option.textContent = exam.name;
+                examSelect.appendChild(option);
+            });
+            
+            // Load already published results
+            const publishedResults = JSON.parse(localStorage.getItem('publishedResults'));
+            const publishedList = document.getElementById('publishedResultsList');
+            publishedList.innerHTML = '';
+            
+            if (publishedResults.length === 0) {
+                publishedList.innerHTML = '<p>No results published yet.</p>';
+                return;
+            }
+            
+            publishedResults.forEach(published => {
+                const exam = exams.find(ex => ex.id === published.examId);
+                if (exam && published.published) {
+                    const div = document.createElement('div');
+                    div.className = 'question';
+                    div.innerHTML = `
+                        <h3>${exam.name}</h3>
+                        <p>Published on: ${new Date(published.timestamp).toLocaleString()}</p>
+                        <button onclick="unpublishResults('${exam.id}')">Unpublish</button>
+                    `;
+                    publishedList.appendChild(div);
+                }
+            });
+        }
+
+        function publishResults() {
+            const examId = document.getElementById('examToPublish').value;
+            if (!examId) return;
+            
+            const publishedResults = JSON.parse(localStorage.getItem('publishedResults'));
+            const exam = JSON.parse(localStorage.getItem('exams')).find(ex => ex.id === examId);
+            
+            // Check if already published
+            const existingIndex = publishedResults.findIndex(res => res.examId === examId);
+            
+            if (existingIndex !== -1) {
+                publishedResults[existingIndex].published = true;
+                publishedResults[existingIndex].timestamp = new Date().toISOString();
+            } else {
+                publishedResults.push({
+                    examId: examId,
+                    examName: exam.name,
+                    published: true,
+                    timestamp: new Date().toISOString()
+                });
+            }
+            
+            localStorage.setItem('publishedResults', JSON.stringify(publishedResults));
+            alert(`Results for ${exam.name} have been published to students.`);
+            loadPublishResults();
+        }
+
+        function unpublishResults(examId) {
+            const publishedResults = JSON.parse(localStorage.getItem('publishedResults'));
+            const index = publishedResults.findIndex(res => res.examId === examId);
+            
+            if (index !== -1) {
+                publishedResults[index].published = false;
+                localStorage.setItem('publishedResults', JSON.stringify(publishedResults));
+                alert('Results have been unpublished and are no longer visible to students.');
+                loadPublishResults();
+            }
+        }
+
+        function loadCheatingReports() {
+            const reports = JSON.parse(localStorage.getItem('cheatingReports'));
+            const reportsDiv = document.getElementById('cheatingRecords');
+            reportsDiv.innerHTML = '';
+            
+            if (reports.length === 0) {
+                reportsDiv.innerHTML = '<p>No cheating reports found.</p>';
+                return;
+            }
+            
+            const table = document.createElement('table');
+            const header = table.createTHead();
+            const headerRow = header.insertRow();
+            headerRow.innerHTML = '<th>Date</th><th>Exam</th><th>Student</th><th>Reason</th><th>Action</th>';
+            
+            const body = table.createTBody();
+            reports.forEach(report => {
+                const row = body.insertRow();
+                row.innerHTML = `
+                    <td>${new Date(report.timestamp).toLocaleString()}</td>
+                    <td>${report.examName}</td>
+                    <td>${report.studentName}</td>
+                    <td>${report.reason}</td>
+                    <td><button onclick="disqualifyStudent('${report.examId}', '${report.studentId}')">Disqualify</button></td>
+                `;
+            });
+            
+            reportsDiv.appendChild(table);
+        }
+
+        function disqualifyStudent(examId, studentId) {
+            if (confirm('Are you sure you want to disqualify this student from this exam?')) {
+                const submissions = JSON.parse(localStorage.getItem('examSubmissions'));
+                const submission = submissions.find(sub => sub.examId === examId && sub.studentId === studentId);
+                
+                if (submission) {
+                    submission.score = 0;
+                    submission.graded = true;
+                    submission.disqualified = true;
+                    localStorage.setItem('examSubmissions', JSON.stringify(submissions));
+                    
+                    alert('Student has been disqualified from this exam (score set to 0).');
+                    loadCheatingReports();
+                    loadExamSubmissions();
+                }
+            }
+        }
+
+        function addQuestion() {
+            const container = document.getElementById('questionsContainer');
+            const questionCount = container.children.length + 1;
+            
+            const questionDiv = document.createElement('div');
+            questionDiv.className = 'question';
+            questionDiv.innerHTML = `
+                <input type="text" placeholder="Question ${questionCount}" class="questionText">
+                <input type="text" placeholder="Correct Answer" class="correctAnswer">
+            `;
+            
+            container.appendChild(questionDiv);
+        }
+
+        function saveExam() {
+            const examName = document.getElementById('examName').value;
+            const examDuration = parseInt(document.getElementById('examDuration').value);
+            
+            if (!examName || isNaN(examDuration)) {
+                alert('Please enter exam name and valid duration');
+                return;
+            }
+            
+            const questionDivs = document.getElementById('questionsContainer').children;
+            if (questionDivs.length === 0) {
+                alert('Please add at least one question');
+                return;
+            }
+            
+            const questions = [];
+            for (let i = 0; i < questionDivs.length; i++) {
+                const div = questionDivs[i];
+                const questionText = div.querySelector('.questionText').value;
+                const correctAnswer = div.querySelector('.correctAnswer').value;
+                
+                if (!questionText || !correctAnswer) {
+                    alert(`Please complete all fields for question ${i + 1}`);
+                    return;
+                }
+                
+                questions.push({
+                    question: questionText,
+                    answer: correctAnswer
+                });
+            }
+            
+            const exams = JSON.parse(localStorage.getItem('exams'));
+            const newExamId = 'exam' + (exams.length + 1);
+            
+            exams.push({
+                id: newExamId,
+                name: examName,
+                duration: examDuration,
+                questions: questions,
+                published: false
+            });
+            
+            localStorage.setItem('exams', JSON.stringify(exams));
+            alert('Exam saved successfully!');
+            
+            // Reset form
+            document.getElementById('examName').value = '';
+            document.getElementById('examDuration').value = '';
+            document.getElementById('questionsContainer').innerHTML = '';
+            addQuestion(); // Add one empty question
+        }
+
+        // Utility functions
+        function openTab(evt, tabName) {
+            const tabcontent = document.getElementsByClassName('tabcontent');
+            for (let i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = 'none';
+            }
+            
+            const tablinks = document.getElementsByClassName('tablinks');
+            for (let i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(' active', '');
+            }
+            
+            document.getElementById(tabName).style.display = 'block';
+            evt.currentTarget.className += ' active';
+            
+            // Refresh specific tabs when opened
+            if (tabName === 'viewResults' && currentUser.type === 'student') {
+                loadStudentResults();
+            } else if (tabName === 'gradeExams' && currentUser.type === 'teacher') {
+                loadGradingExams();
+            } else if (tabName === 'publishResults' && currentUser.type === 'teacher') {
+                loadPublishResults();
+            }
+        }
+
+        // Initialize with one question in create exam
+        window.onload = function() {
+            if (document.getElementById('questionsContainer') && 
+                document.getElementById('questionsContainer').children.length === 0) {
+                addQuestion();
+            }
+        };
+    </script>
+</body>
 </html>
