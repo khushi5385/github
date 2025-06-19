@@ -1,1 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tech Roadmap Navigator | Developer Learning Paths</title>
+    <meta name="description" content="Comprehensive collection of technology roadmaps for developers">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Material+Icons+Round" rel="stylesheet">
+    <style>
+        :root {
+            /* Light mode colors */
+            --bg-primary: #f8fafc;
+            --bg-secondary: #ffffff;
+            --text-primary: #1e293b;
+            --text-secondary: #475569;
+            --accent-primary: #4f46e5;
+            --accent-secondary: #7c3aed;
+            --border-color: #e2e8f0;
+            --shadow-color: rgba(0, 0, 0, 0.08);
+            --card-bg: rgba(255, 255, 255, 0.96);
+            --glow-color: rgba(79, 70, 229, 0.1);
+            
+            /* Dark mode colors */
+            @media (prefers-color-scheme: dark) {
+                --bg-primary: #0f172a;
+                --bg-secondary: #1e293b;
+                --text-primary: #f8fafc;
+                --text-secondary: #cbd5e1;
+                --accent-primary: #6366f1;
+                --accent-secondary: #8b5cf6;
+                --border-color: #334155;
+                --shadow-color: rgba(0, 0, 0, 0.3);
+                --card-bg: rgba(15, 23, 42, 0.96);
+                --glow-color: rgba(99, 102, 241, 0.15);
+            }
+        }
 
+        /* Reset and base styles */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            -webkit-font-smoothing: antialiased;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            line-height: 1.5;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Main container */
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            flex-grow: 1;
+        }
+
+        /* Card component */
+        .card {
+            background: var(--card-bg);
+            border-radius: 1.5rem;
+            width: 100%;
+            max-width: 64rem;
+            padding: 3.5rem 2.5rem;
+            box-shadow: 
+                0 1.5rem 3rem var(--shadow-color),
+                0 0 0 1px var(--border-color);
+            backdrop-filter: blur(1rem);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        /* Header styles */
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            line-height: 1.2;
+            letter-spacing: -0.025em;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(
+                to right, 
+                var(--accent-primary), 
+                var(--accent-secondary)
+            );
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            position: relative;
+            display: inline-block;
+        }
+
+        .title::after {
+            content: '';
+            position: absolute;
+            bottom: -0.75rem;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 5rem;
+            height: 0.25rem;
+            background: linear-gradient(
+                to right,
+                var(--accent-primary),
+                var(--accent-secondary)
+            );
+            border-radius: 0.125rem;
+            opacity: 0.8;
+        }
+
+        .subtitle {
+            color: var(--text-secondary);
+            font-size: 1.125rem;
+            max-width: 36rem;
+            margin: 0 auto;
+        }
+
+        /* Roadmap grid */
+        .roadmap-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+            gap: 1.25rem;
+            width: 100%;
+        }
+
+        /* Roadmap card */
+        .roadmap-card {
+            background: var(--bg-secondary);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            color: var(--text-primary);
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            position: relative;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            text-decoration: none;
+            box-shadow: 
+                0 0.25rem 0.75rem var(--shadow-color),
+                0 0 0 1px var(--border-color);
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .roadmap-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(
+                135deg, 
+                var(--accent-primary), 
+                var(--accent-secondary)
+            );
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: -1;
+        }
+
+        .roadmap-card:hover {
+            transform: translateY(-0.375rem);
+            box-shadow: 
+                0 1rem 2rem var(--glow-color),
+                0 0 0 1px var(--accent-primary);
+            color: white;
+        }
+
+        .roadmap-card:hover::before {
+            opacity: 1;
+        }
+
+        .roadmap-card:hover .icon {
+            transform: translateX(0.25rem);
+            color: white;
+        }
+
+        .roadmap-card:active {
+            transform: translateY(-0.125rem);
+        }
+
+        .roadmap-card:focus-visible {
+            outline: 0.1875rem solid var(--accent-secondary);
+            outline-offset: 0.1875rem;
+        }
+
+        .icon {
+            font-size: 1.75rem;
+            transition: all 0.3s ease;
+            color: var(--accent-primary);
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            margin-top: 3rem;
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .container {
+                padding: 1.5rem;
+            }
+            
+            .card {
+                padding: 2.5rem 1.5rem;
+                border-radius: 1.25rem;
+            }
+            
+            .title {
+                font-size: 2rem;
+            }
+            
+            .roadmap-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .title {
+                font-size: 1.75rem;
+            }
+            
+            .subtitle {
+                font-size: 1rem;
+            }
+            
+            .card {
+                padding: 2rem 1.25rem;
+            }
+            
+            .roadmap-card {
+                padding: 1.25rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <main class="card" role="main">
+            <header class="header">
+                <h1 class="title">Tech Roadmap Navigator</h1>
+                <p class="subtitle">Comprehensive learning paths for modern developers</p>
+            </header>
+            
+            <div class="roadmap-grid">
+                <a href="https://roadmap.sh/frontend" class="roadmap-card" target="_blank" rel="noopener noreferrer">
+                    <span class="material-icons-round icon">code</span>
+                    <span>Frontend Development</span>
+                </a>
+                
+                <a href="https://roadmap.sh/backend" class="roadmap-card" target="_blank" rel="noopener noreferrer">
+                    <span class="material-icons-round icon">storage</span>
+                    <span>Backend Development</span>
+                </a>
+                
+                <a href="https://roadmap.sh/devops" class="roadmap-card" target="_blank" rel="noopener noreferrer">
+                    <span class="material-icons-round icon">settings</span>
+                    <span>DevOps Engineering</span>
+                </a>
+                
+                <a href="https://roadmap.sh/full-stack" class="roadmap-card" target="_blank" rel="noopener noreferrer">
+                    <span class="material-icons-round icon">developer_mode</span>
+                    <span>Full Stack Mastery</span>
+                </a>
+                
+                <a href="https://roadmap.sh/ios" class="roadmap-card" target="_blank" rel="noopener noreferrer">
+                    <span class="material-icons-round icon">phone_iphone</span>
+                    <span>iOS Development</span>
+                </a>
+                
+                <a href="https://roadmap.sh/android" class="roadmap-card" target="_blank" rel="noopener noreferrer">
+                    <span class="material-icons-round icon">android</span>
+                    <span>Android Development</span>
+                </a>
+                
+                <a href="https://roadmap.sh/blockchain" class="roadmap-card" target="_blank" rel="noopener noreferrer">
+                    <span class="material-icons-round icon">currency_bitcoin</span>
+                    <span>Blockchain Development</span>
+                </a>
+                
+                <a href="https://roadmap.sh/cyber-security" class="roadmap-card" target="_blank" rel="noopener noreferrer">
+                    <span class="material-icons-round icon">security</span>
+                    <span>Cyber Security</span>
+                </a>
+            </div>
+        </main>
+        
+        <footer class="footer">
+            <p>© 2023 Tech Roadmap Navigator. All roadmaps courtesy of roadmap.sh</p>
+        </footer>
+    </div>
+</body>
+</html>
